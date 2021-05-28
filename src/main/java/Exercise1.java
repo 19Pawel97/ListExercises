@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Exercise1 {
@@ -11,6 +12,8 @@ public class Exercise1 {
 
     public static void main(String[] args) {
 
+        Random generator = new Random();
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter five numbers: ");
 
@@ -20,8 +23,9 @@ public class Exercise1 {
             integers.add(i, scanner.nextInt());
         }
 
-        for (int i = 5; i < 10; i++) {
-            integers.add(i, ((int) (Math.random() * 1000)));
+        for (int i = 0; i < 5; i++) {
+            int number = generator.nextInt(100);
+            integers.add(number);
         }
 
         for (Integer integer : integers) {
