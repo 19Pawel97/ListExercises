@@ -1,4 +1,4 @@
-package Exercise6;
+package exercise6registerapp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Main {
         marks4.add(5d);
         marks4.add(3.5d);
         marks4.add(4.5d);
-        Student student4 = new Student(marks4, "025439", "Zuzanna", "Mała");
+        Student student4 = new Student(marks4, "525439", "Zuzanna", "Mała");
 
         List<Double> marks5 = new ArrayList<>();
         marks5.add(3.5d);
@@ -44,7 +44,7 @@ public class Main {
         System.out.println(register.getStudents().toString());
         System.out.println();
 
-        register.addStudents(student3,student4,student5);
+        register.addStudents(student3, student4, student5);
         System.out.println(register.getStudents().toString());
         System.out.println();
 
@@ -55,7 +55,7 @@ public class Main {
         register.removeStudent("12413");
         System.out.println();
 
-        register.removeStudents(student1,student4);
+        register.removeStudents(student1, student4);
         System.out.println(register.getStudents().toString());
         System.out.println();
 
@@ -67,5 +67,66 @@ public class Main {
         System.out.println(register.getStudents().toString());
         System.out.println();
 
+        register.addStudents(student1, student2, student3, student4, student5);
+        System.out.println(register.getStudents().toString());
+        System.out.println();
+
+        register.getStudent("123456");
+        System.out.println();
+
+        Student theStudent = register.getStudent("235409");
+        System.out.println(theStudent);
+        System.out.println();
+
+        List<Student> theStudentsNotAll = register.getStudents("025439", "123456", "542310", "678952", "215408");
+        for (Student student : theStudentsNotAll) {
+            System.out.println(student);
+        }
+        System.out.println();
+
+        List<Student> theStudents = register.getStudents("235409", "115409", "135437");
+        for (Student student : theStudents) {
+            System.out.println(student);
+        }
+        System.out.println();
+
+        register.getStudentsAverage("123456");
+        System.out.println();
+
+        Double studentsAverage = register.getStudentsAverage("025439");
+        System.out.println(studentsAverage);
+        System.out.println();
+
+        List<Student> onTheLineStudents = register.getOnTheLineStudents();
+        if (onTheLineStudents.size() == 0) {
+            System.out.println("No on the line students :)");
+        } else {
+            for (Student onTheLineStudent : onTheLineStudents) {
+                System.out.println(onTheLineStudent);
+            }
+        }
+        System.out.println();
+
+        List<Student> sortedStudents = register.sortStudentsByIndex();
+        for (Student sortedStudent : sortedStudents) {
+            System.out.println(sortedStudent);
+        }
+        System.out.println();
+
+        register.addMark("123456", 4.5d);
+        System.out.println();
+
+        register.addMark("235409", 4.5d);
+        List<Double> marks = register.getStudent("235409").getMarks();
+        System.out.println(marks);
+        System.out.println();
+
+        register.addMark(5d, "123456");
+        System.out.println();
+
+        register.addMark(5d, "098765", students.get(0).getIndexNum(), students.get(1).getIndexNum(), "135437", "728423");
+        for (Student student : students) {
+            System.out.println(student);
+        }
     }
 }

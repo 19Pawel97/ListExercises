@@ -1,7 +1,6 @@
-package Exercise6;
+package exercise6registerapp;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.util.*;
 
@@ -39,31 +38,44 @@ public class Register {
 
     public Student getStudent(String studentsIndex) {
         Student theStudent = null;
+        int counter = 0;
         for (Student student : students) {
-            if (student.getIndexNum().equals(studentsIndex)) {
-                theStudent = student;
+            if (!student.getIndexNum().equals(studentsIndex)) {
+                counter++;
             } else {
-                System.out.println("No student with such index!");
+                theStudent = student;
             }
+        }
+        if (counter == students.size()) {
+            System.out.println("No student with such index!");
         }
         return theStudent;
     }
 
     public Double getStudentsAverage(String studentsIndex) {
-        Student theStudent = null;
+        Student theStudent = new Student();
+        Double average = 0d;
+        int counter = 0;
         for (Student student : students) {
-            if (student.getIndexNum().equals(studentsIndex)) {
-                theStudent = student;
+            if (!student.getIndexNum().equals(studentsIndex)) {
+                counter++;
             } else {
-                System.out.println("No student with such index!");
+                theStudent = student;
             }
         }
-        List<Double> theStudentsMarks = theStudent.getMarks();
-        Double sum = 0d;
-        for (Double theStudentsMark : theStudentsMarks) {
-            sum += theStudentsMark;
+        if (counter == students.size()) {
+            System.out.println("No student with such index number!");
         }
-        Double average = sum / theStudentsMarks.size();
+        try {
+            List<Double> theStudentsMarks = theStudent.getMarks();
+            Double sum = 0d;
+            for (Double theStudentsMark : theStudentsMarks) {
+                sum += theStudentsMark;
+            }
+            average = sum / theStudentsMarks.size();
+        } catch (NullPointerException e) {
+            e.toString();
+        }
         return average;
     }
 
@@ -96,20 +108,22 @@ public class Register {
         Collections.sort(indexesInt);
         List<Student> sortedStudents = new ArrayList<>();
         for (int i = 0; i < indexesInt.size(); i++) {
-            for (Student student : students) {
-                if (student.getIndexNum().equals(String.valueOf(indexesInt.get(i)))) {
-                    sortedStudents.add(i, student);
-                }
-            }
+            sortedStudents.add(this.getStudent(String.valueOf(indexesInt.get(i))));
         }
         return sortedStudents;
     }
 
     public void addMark(String indexNum, Double mark) {
+        int counter = 0;
         for (Student student : students) {
             if (student.getIndexNum().equals(indexNum)) {
                 student.getMarks().add(mark);
+            } else {
+                counter++;
             }
+        }
+        if (counter == students.size()) {
+            System.out.println("No student with such index number! No mark added.");
         }
     }
 
@@ -130,13 +144,19 @@ public class Register {
     public List<Student> getStudents(String... studentsIndexes) {
         List<String> theStudentsIndexes = Arrays.asList(studentsIndexes);
         List<Student> theStudents = new ArrayList<>();
-        for (String theStudentsIndex : theStudentsIndexes) {
+        int[] counters = new int[theStudentsIndexes.size()];
+        for (int i = 0; i < theStudentsIndexes.size(); i++) {
             for (Student student : students) {
-                if (student.getIndexNum().equals(theStudentsIndex)) {
-                    theStudents.add(student);
+                if (!student.getIndexNum().equals(theStudentsIndexes.get(i))) {
+                    counters[i]++;
                 } else {
-                    System.out.println("No student with such index!");
+                    theStudents.add(student);
                 }
+            }
+        }
+        for (int i = 0; i < theStudentsIndexes.size(); i++) {
+            if (counters[i] == students.size()) {
+                System.out.println(theStudentsIndexes.get(i) + " - no student with such index number in the register!");
             }
         }
         return theStudents;
@@ -144,13 +164,22 @@ public class Register {
 
     public void addMark(Double mark, String... indexNums) {
         List<String> theStudentsIndexes = Arrays.asList(indexNums);
-        for (String theStudentsIndex : theStudentsIndexes) {
+        int[] counters = new int[theStudentsIndexes.size()];
+        for (int i = 0; i < theStudentsIndexes.size(); i++) {
             for (Student student : students) {
-                if (student.getIndexNum().equals(theStudentsIndex)) {
+                if (!student.getIndexNum().equals(theStudentsIndexes.get(i))) {
+                    counters[i]++;
+                } else {
                     student.getMarks().add(mark);
                 }
             }
         }
+        for (int i = 0; i < theStudentsIndexes.size(); i++) {
+            if (counters[i] == students.size()) {
+                System.out.println(theStudentsIndexes.get(i) + " - no student with such index number, no mark added.");
+            }
+        }
+
 
     }
 
